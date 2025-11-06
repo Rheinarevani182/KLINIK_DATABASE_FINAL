@@ -1,29 +1,25 @@
--- Mulai transaksi
 BEGIN;
 
--- Buat tabel pembayaran
-CREATE TABLE IF NOT EXISTS pembayaran (
-    id_pembayaran SERIAL PRIMARY KEY,
-    tanggal_pembayaran DATE NOT NULL,
-    id_pemeriksaan INTEGER NOT NULL,
-    id_resep INTEGER NOT NULL,
-    tarif_dokter NUMERIC(12,2) NOT NULL,
-    metode_pembayaran VARCHAR(50) NOT NULL
-);
+-- Tambah data pertama
+INSERT INTO pembayaran (tanggal_pembayaran, id_pemeriksaan, id_resep, tarif_dokter, metode_pembayaran)
+VALUES ('2025-11-04', 1, 1, 150000.00, 'Transfer');
+SAVEPOINT tahap_1;
 
--- Masukkan data ke tabel pembayaran
-INSERT INTO pembayaran (
-    tanggal_pembayaran,
-    id_pemeriksaan,
-    id_resep,
-    tarif_dokter,
-    metode_pembayaran
-)
-VALUES
-    ('2006-01-06', 6, 1, 125000.00, 'Kredit');
+-- Tambah data kedua
+INSERT INTO pembayaran (tanggal_pembayaran, id_pemeriksaan, id_resep, tarif_dokter, metode_pembayaran)
+VALUES ('2025-11-04', 2, 2, 125000.00, 'QRIS');
+SAVEPOINT tahap_2;
 
--- Selesaikan transaksi
-COMMIT;
+-- Tambah data ketiga
+INSERT INTO pembayaran (tanggal_pembayaran, id_pemeriksaan, id_resep, tarif_dokter, metode_pembayaran)
+VALUES ('2025-11-04', 3, 3, 200000.00, 'Tunai');
+SAVEPOINT tahap_3;
 
--- Cek hasil setelah commit
+-- Tambah data keempat
+INSERT INTO pembayaran (tanggal_pembayaran, id_pemeriksaan, id_resep, tarif_dokter, metode_pembayaran)
+VALUES ('2025-11-04', 4, 4, 175000.00, 'Kredit');
+SAVEPOINT tahap_4;
+
 SELECT * FROM pembayaran;
+
+COMMIT;
